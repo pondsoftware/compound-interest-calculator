@@ -12,6 +12,20 @@ export const metadata: Metadata = {
   title: "Compound Interest Calculator — See How Your Money Grows",
   description:
     "Free compound interest calculator. See how your investments grow over time with monthly contributions. Visual growth chart shows contributions vs interest earned.",
+  openGraph: {
+    title: "Compound Interest Calculator",
+    description:
+      "Free compound interest calculator. See how your investments grow over time with monthly contributions. Visual growth chart shows contributions vs interest earned.",
+    type: "website",
+    url: "https://compoundinterestcalc.app",
+    siteName: "Compound Interest Calculator",
+  },
+  twitter: {
+    card: "summary",
+    title: "Compound Interest Calculator",
+    description:
+      "Free compound interest calculator. See how your investments grow over time with monthly contributions. Visual growth chart shows contributions vs interest earned.",
+  },
 };
 
 export default function RootLayout({
