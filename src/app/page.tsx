@@ -32,6 +32,108 @@ export default function Home() {
     <>
       <CompoundInterestCalculator />
 
+      {/* Educational Content */}
+      <section className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-12">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            The Power of Compound Interest
+          </h2>
+          <div className="text-gray-600 space-y-4">
+            <p>
+              Compound interest is often called the &ldquo;eighth wonder of the
+              world&rdquo; &mdash; a quote widely attributed to Albert Einstein,
+              who reportedly added: &ldquo;He who understands it, earns it; he
+              who doesn&apos;t, pays it.&rdquo; Whether or not Einstein actually
+              said it, the principle behind it is undeniably powerful. Unlike
+              simple interest, which only earns returns on your original
+              principal, compound interest earns returns on your returns. Over
+              time, this creates an exponential growth curve that can turn modest
+              savings into substantial wealth.
+            </p>
+            <p>
+              Consider a concrete example: if you invest $10,000 at a 7% annual
+              return and add $500 per month, after 30 years you would have over
+              $680,000 &mdash; even though you only contributed $190,000 out of
+              pocket. The remaining $490,000+ came entirely from compound
+              interest working on your behalf, year after year. The longer your
+              money compounds, the more dramatic the growth becomes.
+            </p>
+            <p>
+              This is precisely why starting early matters so much. An investor
+              who begins at age 25 and invests $500/month until age 65 will
+              accumulate far more than someone who starts at 35 with the same
+              contributions. Those first 10 years of compounding create a
+              foundation that the late starter can never fully catch up to, even
+              by contributing more money. Time is the single most powerful
+              ingredient in the compound interest formula.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            The Rule of 72
+          </h2>
+          <div className="text-gray-600 space-y-4">
+            <p>
+              The Rule of 72 is a simple mental math shortcut for estimating how
+              long it takes your money to double. Just divide 72 by your
+              expected annual rate of return. The result is the approximate
+              number of years to double your investment.
+            </p>
+            <p>
+              Here are a few examples to illustrate:
+            </p>
+            <ul className="list-disc list-inside space-y-1">
+              <li>At 6% return: 72 / 6 = <strong>12 years</strong> to double</li>
+              <li>At 8% return: 72 / 8 = <strong>9 years</strong> to double</li>
+              <li>At 10% return: 72 / 10 = <strong>7.2 years</strong> to double</li>
+              <li>At 12% return: 72 / 12 = <strong>6 years</strong> to double</li>
+            </ul>
+            <p>
+              The Rule of 72 also works in reverse &mdash; you can use it to
+              understand the erosion of purchasing power due to inflation. At 3%
+              inflation, the purchasing power of your cash is cut in half in
+              about 24 years (72 / 3 = 24). This is why keeping large amounts
+              of money in a savings account earning below the inflation rate
+              actually loses you wealth over time.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Compound Interest Formula
+          </h2>
+          <div className="text-gray-600 space-y-4">
+            <p>
+              The formula used by this calculator to compute compound interest
+              with regular contributions is:
+            </p>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center font-mono text-sm sm:text-base overflow-x-auto">
+              A = P(1 + r/n)<sup>nt</sup> + PMT &times; [(1 + r/n)<sup>nt</sup> &minus; 1] / (r/n)
+            </div>
+            <p>Where each variable represents:</p>
+            <ul className="list-disc list-inside space-y-1">
+              <li><strong>A</strong> = final amount (future value)</li>
+              <li><strong>P</strong> = principal (initial investment)</li>
+              <li><strong>r</strong> = annual interest rate (as a decimal)</li>
+              <li><strong>n</strong> = number of compounding periods per year</li>
+              <li><strong>t</strong> = number of years</li>
+              <li><strong>PMT</strong> = regular contribution per compounding period</li>
+            </ul>
+            <p>
+              This calculator uses monthly compounding (n = 12), which is the
+              most common frequency for investment accounts. The first part of
+              the formula calculates the growth of your initial principal, while
+              the second part calculates the accumulated value of your regular
+              monthly contributions. Together, they give you the total future
+              value of your investment.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
         <div className="space-y-6">

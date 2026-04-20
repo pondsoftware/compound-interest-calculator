@@ -7,6 +7,7 @@ interface YearData {
   totalContributions: number;
   totalInterest: number;
   balance: number;
+  realBalance: number;
 }
 
 function formatCurrency(value: number): string {
@@ -26,14 +27,33 @@ function formatPercent(value: number): string {
   }).format(value);
 }
 
+function calculateFinalBalance(
+  principal: number,
+  monthly: number,
+  rate: number,
+  years: number
+): number {
+  const monthlyRate = rate / 100 / 12;
+  let balance = principal;
+  for (let y = 1; y <= years; y++) {
+    for (let m = 0; m < 12; m++) {
+      balance += balance * monthlyRate + monthly;
+    }
+  }
+  return balance;
+}
+
 export default function CompoundInterestCalculator() {
   const [principal, setPrincipal] = useState(10000);
   const [monthly, setMonthly] = useState(500);
   const [rate, setRate] = useState(7);
   const [years, setYears] = useState(20);
+  const [adjustForInflation, setAdjustForInflation] = useState(false);
+  const [inflationRate, setInflationRate] = useState(3);
 
   const schedule = useMemo(() => {
     const monthlyRate = rate / 100 / 12;
+    const annualInflation = inflationRate / 100;
     const data: YearData[] = [];
     let balance = principal;
     let totalContributions = principal;
@@ -46,23 +66,41 @@ export default function CompoundInterestCalculator() {
         balance += interest + monthly;
         totalContributions += monthly;
       }
+      const realBalance = balance / Math.pow(1 + annualInflation, y);
       data.push({
         year: y,
         totalContributions,
         totalInterest,
         balance,
+        realBalance,
       });
     }
     return data;
-  }, [principal, monthly, rate, years]);
+  }, [principal, monthly, rate, years, inflationRate]);
 
   const final = schedule[schedule.length - 1];
   const totalContributed = final?.totalContributions ?? principal;
   const totalInterest = final?.totalInterest ?? 0;
   const finalBalance = final?.balance ?? principal;
+  const realFinalBalance = final?.realBalance ?? principal;
+  const purchasingPowerLost = finalBalance - realFinalBalance;
   const interestPercent = finalBalance > 0 ? totalInterest / finalBalance : 0;
 
   const maxBalance = final?.balance ?? 1;
+
+  // "What If I Started Earlier?" comparison
+  const comparison = useMemo(() => {
+    const now = calculateFinalBalance(principal, monthly, rate, years);
+    const fiveYearsAgo = calculateFinalBalance(principal, monthly, rate, years + 5);
+    const tenYearsAgo = calculateFinalBalance(principal, monthly, rate, years + 10);
+    return {
+      now,
+      fiveYearsAgo,
+      fiveYearsDiff: fiveYearsAgo - now,
+      tenYearsAgo,
+      tenYearsDiff: tenYearsAgo - now,
+    };
+  }, [principal, monthly, rate, years]);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -150,32 +188,98 @@ export default function CompoundInterestCalculator() {
             </div>
           </div>
         </div>
+
+        {/* Inflation Toggle */}
+        <div className="mt-6 pt-6 border-t border-gray-200">
+          <div className="flex items-center gap-3">
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={adjustForInflation}
+                onChange={(e) => setAdjustForInflation(e.target.checked)}
+                className="sr-only peer"
+              />
+              <div className="w-9 h-5 bg-gray-300 peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full" />
+            </label>
+            <span className="text-sm font-medium text-gray-700">
+              Adjust for inflation
+            </span>
+          </div>
+          {adjustForInflation && (
+            <div className="mt-4 max-w-xs">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Annual Inflation Rate
+              </label>
+              <div className="relative">
+                <input
+                  type="number"
+                  value={inflationRate}
+                  onChange={(e) => setInflationRate(Number(e.target.value))}
+                  min={0}
+                  max={20}
+                  step={0.1}
+                  className="w-full pr-8 pl-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                  %
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        <div className="bg-white rounded-lg border border-gray-200 p-5 text-center">
-          <p className="text-sm text-gray-500 mb-1">Final Balance</p>
-          <p className="text-2xl font-bold text-gray-900">
-            {formatCurrency(finalBalance)}
-          </p>
+      {adjustForInflation ? (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div className="bg-white rounded-lg border border-gray-200 p-5 text-center">
+            <p className="text-sm text-gray-500 mb-1">Nominal Final Balance</p>
+            <p className="text-2xl font-bold text-gray-900">
+              {formatCurrency(finalBalance)}
+            </p>
+          </div>
+          <div className="bg-white rounded-lg border border-gray-200 p-5 text-center">
+            <p className="text-sm text-gray-500 mb-1">
+              Real (Today&apos;s Dollars)
+            </p>
+            <p className="text-2xl font-bold text-blue-600">
+              {formatCurrency(realFinalBalance)}
+            </p>
+          </div>
+          <div className="bg-white rounded-lg border border-gray-200 p-5 text-center">
+            <p className="text-sm text-gray-500 mb-1">
+              Purchasing Power Lost to Inflation
+            </p>
+            <p className="text-2xl font-bold text-red-600">
+              {formatCurrency(purchasingPowerLost)}
+            </p>
+          </div>
         </div>
-        <div className="bg-white rounded-lg border border-gray-200 p-5 text-center">
-          <p className="text-sm text-gray-500 mb-1">Total Contributed</p>
-          <p className="text-2xl font-bold text-blue-600">
-            {formatCurrency(totalContributed)}
-          </p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div className="bg-white rounded-lg border border-gray-200 p-5 text-center">
+            <p className="text-sm text-gray-500 mb-1">Final Balance</p>
+            <p className="text-2xl font-bold text-gray-900">
+              {formatCurrency(finalBalance)}
+            </p>
+          </div>
+          <div className="bg-white rounded-lg border border-gray-200 p-5 text-center">
+            <p className="text-sm text-gray-500 mb-1">Total Contributed</p>
+            <p className="text-2xl font-bold text-blue-600">
+              {formatCurrency(totalContributed)}
+            </p>
+          </div>
+          <div className="bg-white rounded-lg border border-gray-200 p-5 text-center">
+            <p className="text-sm text-gray-500 mb-1">Interest Earned</p>
+            <p className="text-2xl font-bold text-green-600">
+              {formatCurrency(totalInterest)}
+            </p>
+            <p className="text-xs text-gray-400 mt-1">
+              {formatPercent(interestPercent)} of final balance
+            </p>
+          </div>
         </div>
-        <div className="bg-white rounded-lg border border-gray-200 p-5 text-center">
-          <p className="text-sm text-gray-500 mb-1">Interest Earned</p>
-          <p className="text-2xl font-bold text-green-600">
-            {formatCurrency(totalInterest)}
-          </p>
-          <p className="text-xs text-gray-400 mt-1">
-            {formatPercent(interestPercent)} of final balance
-          </p>
-        </div>
-      </div>
+      )}
 
       {/* Visual Growth Chart */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
@@ -255,6 +359,11 @@ export default function CompoundInterestCalculator() {
                 <th className="text-right px-6 py-3 font-medium text-gray-500">
                   Balance
                 </th>
+                {adjustForInflation && (
+                  <th className="text-right px-6 py-3 font-medium text-gray-500">
+                    Real Balance
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -270,10 +379,58 @@ export default function CompoundInterestCalculator() {
                   <td className="px-6 py-3 text-right font-medium text-gray-900">
                     {formatCurrency(d.balance)}
                   </td>
+                  {adjustForInflation && (
+                    <td className="px-6 py-3 text-right font-medium text-orange-600">
+                      {formatCurrency(d.realBalance)}
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* What If I Started Earlier? */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
+        <h2 className="text-lg font-semibold text-gray-900 mb-2">
+          What If I Started Earlier?
+        </h2>
+        <p className="text-sm text-gray-500 mb-4">
+          See how much more you could have with the same inputs but more time in
+          the market.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-gray-50 rounded-lg p-5 text-center border border-gray-200">
+            <p className="text-sm font-medium text-gray-500 mb-1">
+              Starting Now ({years} years)
+            </p>
+            <p className="text-xl font-bold text-gray-900">
+              {formatCurrency(comparison.now)}
+            </p>
+          </div>
+          <div className="bg-blue-50 rounded-lg p-5 text-center border border-blue-200">
+            <p className="text-sm font-medium text-blue-700 mb-1">
+              Started 5 Years Ago ({years + 5} years)
+            </p>
+            <p className="text-xl font-bold text-blue-900">
+              {formatCurrency(comparison.fiveYearsAgo)}
+            </p>
+            <p className="text-sm text-blue-600 mt-1">
+              +{formatCurrency(comparison.fiveYearsDiff)} more
+            </p>
+          </div>
+          <div className="bg-green-50 rounded-lg p-5 text-center border border-green-200">
+            <p className="text-sm font-medium text-green-700 mb-1">
+              Started 10 Years Ago ({years + 10} years)
+            </p>
+            <p className="text-xl font-bold text-green-900">
+              {formatCurrency(comparison.tenYearsAgo)}
+            </p>
+            <p className="text-sm text-green-600 mt-1">
+              +{formatCurrency(comparison.tenYearsDiff)} more
+            </p>
+          </div>
         </div>
       </div>
     </div>
