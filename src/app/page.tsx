@@ -160,6 +160,33 @@ export default function Home() {
           })
         }}
       />
+      {/* Related Calculators Navigation Grid */}
+      <section className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Calculators</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <a href="/savings-goal" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Savings Goal Calculator</h3>
+            <p className="text-sm text-gray-500">Find how long to reach your savings target or the monthly contribution needed.</p>
+          </a>
+          <a href="/investment-growth" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Investment Growth Calculator</h3>
+            <p className="text-sm text-gray-500">Project portfolio growth with monthly additions and year-by-year breakdown.</p>
+          </a>
+          <a href="/rule-of-72" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Rule of 72 Calculator</h3>
+            <p className="text-sm text-gray-500">Estimate how long to double your money at any interest rate.</p>
+          </a>
+          <a href="/inflation" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Inflation Calculator</h3>
+            <p className="text-sm text-gray-500">See how inflation erodes purchasing power and find present value of future amounts.</p>
+          </a>
+          <a href="/retirement" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Retirement Savings Calculator</h3>
+            <p className="text-sm text-gray-500">Estimate your nest egg and monthly retirement income using the 4% rule.</p>
+          </a>
+        </div>
+      </section>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -2,7 +2,14 @@ import { writeFileSync } from "fs";
 
 const DOMAIN = "https://compoundinterestcalc.app";
 
-const urls = ["/"];
+const urls = [
+  "/",
+  "/savings-goal",
+  "/investment-growth",
+  "/rule-of-72",
+  "/inflation",
+  "/retirement",
+];
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
