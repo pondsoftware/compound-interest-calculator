@@ -51,7 +51,7 @@ export default function RootLayout({
         `}
       </Script>
       <body className="min-h-full flex flex-col font-sans bg-gray-50 text-gray-900">
-        <header className="bg-orange-500 text-white">
+        <header className="bg-blue-500 text-white">
           <div className="max-w-4xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
             <a href="/" className="flex items-center gap-2 text-xl font-bold text-white no-underline">
               <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -67,16 +67,16 @@ export default function RootLayout({
             <div className="mb-4">
               <p className="text-sm font-medium text-gray-700 text-center mb-2">More Free Tools</p>
               <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm">
-                <a href="https://appliancecostcalculator.net" className="text-orange-600 hover:underline">Appliance Cost Calculator</a>
-                <a href="https://sidehustletaxcalculator.net" className="text-orange-600 hover:underline">Side Hustle Tax Calculator</a>
-                <a href="https://imageconverters.net" className="text-orange-600 hover:underline">Image Converter</a>
-                <a href="https://photometadata.net" className="text-orange-600 hover:underline">Photo Metadata Viewer</a>
-                <a href="https://freelancerates.net" className="text-orange-600 hover:underline">Freelance Rate Calculator</a>
-                <a href="https://imageresizers.net" className="text-orange-600 hover:underline">Social Image Resizer</a>
-                <a href="https://lendingcalculator.net" className="text-orange-600 hover:underline">Mortgage Calculator</a>
-                <a href="https://salaryconverter.net" className="text-orange-600 hover:underline">Salary Converter</a>
-                <a href="https://printablepolly.com" className="text-orange-600 hover:underline">Printable Polly</a>
-                <a href="https://biblegarden.net" className="text-orange-600 hover:underline">Bible Garden</a>
+                <a href="https://appliancecostcalculator.net" className="text-blue-600 hover:underline">Appliance Cost Calculator</a>
+                <a href="https://sidehustletaxcalculator.net" className="text-blue-600 hover:underline">Side Hustle Tax Calculator</a>
+                <a href="https://imageconverters.net" className="text-blue-600 hover:underline">Image Converter</a>
+                <a href="https://photometadata.net" className="text-blue-600 hover:underline">Photo Metadata Viewer</a>
+                <a href="https://freelancerates.net" className="text-blue-600 hover:underline">Freelance Rate Calculator</a>
+                <a href="https://imageresizers.net" className="text-blue-600 hover:underline">Social Image Resizer</a>
+                <a href="https://lendingcalculator.net" className="text-blue-600 hover:underline">Mortgage Calculator</a>
+                <a href="https://salaryconverter.net" className="text-blue-600 hover:underline">Salary Converter</a>
+                <a href="https://printablepolly.com" className="text-blue-600 hover:underline">Printable Polly</a>
+                <a href="https://biblegarden.net" className="text-blue-600 hover:underline">Bible Garden</a>
               </div>
             </div>
             <p className="text-sm text-gray-500 text-center">
