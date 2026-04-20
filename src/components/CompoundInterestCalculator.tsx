@@ -66,6 +66,9 @@ export default function CompoundInterestCalculator() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-bold text-gray-900 mb-3">
+        Compound Interest Calculator
+      </h1>
       <p className="text-gray-600 mb-8">
         See how your investments grow over time with compound interest and
         regular monthly contributions. Adjust the inputs below and watch the
