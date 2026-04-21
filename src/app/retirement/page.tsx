@@ -17,6 +17,17 @@ export const metadata: Metadata = {
   },
 };
 
+const webAppJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Retirement Savings Calculator",
+  description: "Free retirement calculator. Estimate your retirement nest egg based on age, savings, and contributions. See projected monthly retirement income using the 4% safe withdrawal rule.",
+  url: "https://compoundinterestcalc.app/retirement",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
 export default function RetirementPage() {
   const faqs = [
     {
@@ -43,6 +54,7 @@ export default function RetirementPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppJsonLd) }} />
       <RetirementCalculator />
 
       {/* Educational Content */}

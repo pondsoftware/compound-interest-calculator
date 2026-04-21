@@ -17,6 +17,17 @@ export const metadata: Metadata = {
   },
 };
 
+const webAppJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Inflation Calculator",
+  description: "Free inflation calculator. See how inflation erodes purchasing power over time. Calculate what today's money will be worth in the future, or find the present value of future amounts.",
+  url: "https://compoundinterestcalc.app/inflation",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
 export default function InflationPage() {
   const faqs = [
     {
@@ -43,6 +54,7 @@ export default function InflationPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppJsonLd) }} />
       <InflationCalculator />
 
       {/* Educational Content */}

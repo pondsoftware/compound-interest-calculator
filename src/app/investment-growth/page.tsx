@@ -17,6 +17,17 @@ export const metadata: Metadata = {
   },
 };
 
+const webAppJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Investment Growth Calculator",
+  description: "Free investment growth calculator. Project how your portfolio grows over time with compound returns and monthly additions. Year-by-year breakdown of contributions vs returns.",
+  url: "https://compoundinterestcalc.app/investment-growth",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
 export default function InvestmentGrowthPage() {
   const faqs = [
     {
@@ -43,6 +54,7 @@ export default function InvestmentGrowthPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppJsonLd) }} />
       <InvestmentGrowthCalculator />
 
       {/* Educational Content */}

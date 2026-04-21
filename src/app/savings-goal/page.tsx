@@ -17,6 +17,17 @@ export const metadata: Metadata = {
   },
 };
 
+const webAppJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Savings Goal Calculator",
+  description: "Free savings goal calculator. Find out how long it takes to reach your savings target, or calculate the monthly contribution needed to hit your goal by a specific date.",
+  url: "https://compoundinterestcalc.app/savings-goal",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
 export default function SavingsGoalPage() {
   const faqs = [
     {
@@ -43,6 +54,7 @@ export default function SavingsGoalPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppJsonLd) }} />
       <SavingsGoalCalculator />
 
       {/* Educational Content */}

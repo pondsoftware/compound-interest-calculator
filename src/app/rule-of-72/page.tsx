@@ -17,6 +17,17 @@ export const metadata: Metadata = {
   },
 };
 
+const webAppJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Rule of 72 Calculator",
+  description: "Free Rule of 72 calculator. Instantly estimate how long it takes to double your money at any interest rate. Comparison table of common rates and exact doubling times.",
+  url: "https://compoundinterestcalc.app/rule-of-72",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
 export default function RuleOf72Page() {
   const faqs = [
     {
@@ -43,6 +54,7 @@ export default function RuleOf72Page() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppJsonLd) }} />
       <RuleOf72Calculator />
 
       {/* Educational Content */}
