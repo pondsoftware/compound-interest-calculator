@@ -199,6 +199,21 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Related Financial Tools */}
+      <section className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Financial Tools</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <a href="https://lendingcalculator.net" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Mortgage Calculator</h3>
+            <p className="text-sm text-gray-500">Calculate monthly payments, total interest, and amortization for any home loan.</p>
+          </a>
+          <a href="https://salaryconverter.net" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Salary Converter</h3>
+            <p className="text-sm text-gray-500">Convert annual salary to hourly, monthly, or weekly pay. Compare across 180+ countries.</p>
+          </a>
+        </div>
+      </section>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
