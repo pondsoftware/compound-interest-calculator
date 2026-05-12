@@ -80,6 +80,7 @@ export default function RootLayout({
                 <a href="https://lendingcalculator.net" className="text-blue-600 hover:underline">Mortgage Calculator</a>
                 <a href="https://salaryconverter.net" className="text-blue-600 hover:underline">Salary Converter</a>
                 <a href="https://printablepolly.com" className="text-blue-600 hover:underline">Printable Polly</a>
+                <a href="https://debtmath.net" className="text-blue-600 hover:underline">DebtMath</a>
                 <a href="https://biblegarden.net" className="text-blue-600 hover:underline">Bible Garden</a>
               </div>
             </div>
