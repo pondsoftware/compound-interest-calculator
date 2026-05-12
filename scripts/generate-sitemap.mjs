@@ -9,6 +9,11 @@ const urls = [
   "/rule-of-72",
   "/inflation",
   "/retirement",
+  "/compound-vs-simple-interest",
+  "/rule-of-72-explained",
+  "/daily-vs-monthly-vs-annual-compounding",
+  "/how-long-until-savings-double",
+  "/compound-interest-formula",
 ];
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
