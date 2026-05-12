@@ -172,6 +172,33 @@ export default function Home() {
           })
         }}
       />
+      {/* Learn / Educational Articles */}
+      <section className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Learn About Compound Interest</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <a href="/compound-vs-simple-interest" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Compound vs Simple Interest</h3>
+            <p className="text-sm text-gray-500">Side-by-side comparison with worked examples over 5-40 years.</p>
+          </a>
+          <a href="/rule-of-72-explained" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Rule of 72 Explained</h3>
+            <p className="text-sm text-gray-500">Where the number 72 comes from, when it&apos;s accurate, and how to use it.</p>
+          </a>
+          <a href="/daily-vs-monthly-vs-annual-compounding" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Compounding Frequency</h3>
+            <p className="text-sm text-gray-500">Daily vs monthly vs annual — and the APY/APR distinction.</p>
+          </a>
+          <a href="/how-long-until-savings-double" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">How Long Until Savings Double</h3>
+            <p className="text-sm text-gray-500">Doubling times by rate, plus realistic returns for common accounts.</p>
+          </a>
+          <a href="/compound-interest-formula" className="bg-white rounded-lg border border-gray-200 p-5 hover:border-blue-300 hover:shadow-sm transition group">
+            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1">Compound Interest Formula</h3>
+            <p className="text-sm text-gray-500">Step-by-step walkthrough with hand-verifiable examples.</p>
+          </a>
+        </div>
+      </section>
+
       {/* Related Calculators Navigation Grid */}
       <section className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Calculators</h2>
