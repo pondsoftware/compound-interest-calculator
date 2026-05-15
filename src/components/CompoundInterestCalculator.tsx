@@ -30,6 +30,7 @@ function formatPercent(value: number): string {
 function calculateFinalBalance(
   principal: number,
   monthly: number,
+  annual: number,
   rate: number,
   years: number
 ): number {
@@ -39,6 +40,7 @@ function calculateFinalBalance(
     for (let m = 0; m < 12; m++) {
       balance += balance * monthlyRate + monthly;
     }
+    balance += annual;
   }
   return balance;
 }
@@ -46,6 +48,7 @@ function calculateFinalBalance(
 export default function CompoundInterestCalculator() {
   const [principal, setPrincipal] = useState(10000);
   const [monthly, setMonthly] = useState(500);
+  const [annual, setAnnual] = useState(0);
   const [rate, setRate] = useState(7);
   const [years, setYears] = useState(20);
   const [adjustForInflation, setAdjustForInflation] = useState(false);
@@ -66,6 +69,8 @@ export default function CompoundInterestCalculator() {
         balance += interest + monthly;
         totalContributions += monthly;
       }
+      balance += annual;
+      totalContributions += annual;
       const realBalance = balance / Math.pow(1 + annualInflation, y);
       data.push({
         year: y,
@@ -76,7 +81,7 @@ export default function CompoundInterestCalculator() {
       });
     }
     return data;
-  }, [principal, monthly, rate, years, inflationRate]);
+  }, [principal, monthly, annual, rate, years, inflationRate]);
 
   const final = schedule[schedule.length - 1];
   const totalContributed = final?.totalContributions ?? principal;
@@ -90,9 +95,9 @@ export default function CompoundInterestCalculator() {
 
   // "What If I Started Earlier?" comparison
   const comparison = useMemo(() => {
-    const now = calculateFinalBalance(principal, monthly, rate, years);
-    const fiveYearsAgo = calculateFinalBalance(principal, monthly, rate, years + 5);
-    const tenYearsAgo = calculateFinalBalance(principal, monthly, rate, years + 10);
+    const now = calculateFinalBalance(principal, monthly, annual, rate, years);
+    const fiveYearsAgo = calculateFinalBalance(principal, monthly, annual, rate, years + 5);
+    const tenYearsAgo = calculateFinalBalance(principal, monthly, annual, rate, years + 10);
     return {
       now,
       fiveYearsAgo,
@@ -100,7 +105,7 @@ export default function CompoundInterestCalculator() {
       tenYearsAgo,
       tenYearsDiff: tenYearsAgo - now,
     };
-  }, [principal, monthly, rate, years]);
+  }, [principal, monthly, annual, rate, years]);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -108,9 +113,10 @@ export default function CompoundInterestCalculator() {
         Compound Interest Calculator
       </h1>
       <p className="text-gray-600 mb-8">
-        See how your investments grow over time with compound interest and
-        regular monthly contributions. Adjust the inputs below and watch the
-        growth chart update instantly.
+        See how your investments grow over time with compound interest, regular
+        monthly contributions, and an optional yearly lump sum like a tax refund
+        or bonus. Adjust the inputs below and watch the growth chart update
+        instantly.
       </p>
 
       {/* Inputs */}
@@ -149,6 +155,26 @@ export default function CompoundInterestCalculator() {
                 className="w-full pl-7 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
               />
             </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Additional Annual Contribution
+            </label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                $
+              </span>
+              <input
+                type="number"
+                value={annual}
+                onChange={(e) => setAnnual(Number(e.target.value))}
+                min={0}
+                className="w-full pl-7 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+              />
+            </div>
+            <p className="mt-1 text-xs text-gray-500">
+              Optional lump sum added once a year — e.g. a tax refund or bonus.
+            </p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
