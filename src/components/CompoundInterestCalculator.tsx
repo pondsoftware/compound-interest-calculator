@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { exportToPdf, exportToExcel, type ExportData } from "@/lib/calculatorExport";
 
 interface YearData {
   year: number;
@@ -90,6 +91,40 @@ export default function CompoundInterestCalculator() {
   const realFinalBalance = final?.realBalance ?? principal;
   const purchasingPowerLost = finalBalance - realFinalBalance;
   const interestPercent = finalBalance > 0 ? totalInterest / finalBalance : 0;
+
+  const [isExporting, setIsExporting] = useState<"pdf" | "excel" | null>(null);
+
+  function buildExportData(): ExportData {
+    return {
+      principal,
+      monthly,
+      annual,
+      rate,
+      years,
+      adjustForInflation,
+      inflationRate,
+      finalBalance,
+      totalContributed,
+      totalInterest,
+      realFinalBalance,
+      schedule,
+    };
+  }
+
+  async function handleExport(kind: "pdf" | "excel") {
+    if (isExporting) return;
+    setIsExporting(kind);
+    try {
+      const data = buildExportData();
+      if (kind === "pdf") await exportToPdf(data);
+      else await exportToExcel(data);
+    } catch (err) {
+      console.error("Export failed", err);
+      alert("Sorry — export failed. Please try again.");
+    } finally {
+      setIsExporting(null);
+    }
+  }
 
   const maxBalance = final?.balance ?? 1;
 
@@ -362,6 +397,32 @@ export default function CompoundInterestCalculator() {
             Interest Earned
           </span>
         </div>
+      </div>
+
+      {/* Export buttons */}
+      <div className="flex flex-wrap gap-3 mb-6">
+        <button
+          type="button"
+          onClick={() => handleExport("pdf")}
+          disabled={isExporting !== null}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-50 disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-200"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V8l-6-6H4zm6 1.5V8h4.5L10 3.5zM10 11a.75.75 0 01.75.75v2.69l.72-.72a.75.75 0 111.06 1.06l-2 2a.75.75 0 01-1.06 0l-2-2a.75.75 0 111.06-1.06l.72.72v-2.69A.75.75 0 0110 11z" />
+          </svg>
+          {isExporting === "pdf" ? "Generating PDF…" : "Export as PDF"}
+        </button>
+        <button
+          type="button"
+          onClick={() => handleExport("excel")}
+          disabled={isExporting !== null}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-50 disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-200"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V8l-6-6H4zm6 1.5V8h4.5L10 3.5zM10 11a.75.75 0 01.75.75v2.69l.72-.72a.75.75 0 111.06 1.06l-2 2a.75.75 0 01-1.06 0l-2-2a.75.75 0 111.06-1.06l.72.72v-2.69A.75.75 0 0110 11z" />
+          </svg>
+          {isExporting === "excel" ? "Generating Excel…" : "Export as Excel"}
+        </button>
       </div>
 
       {/* Year-by-Year Table */}
